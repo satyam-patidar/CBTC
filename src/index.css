@@ -6,16 +6,19 @@
 
 @layer base {
   h1 {
-    @apply text-[64px] font-extrabold;
+    @apply text-6xl font-extrabold;
   }
   h2 {
-    @apply text-[48px] font-extrabold;
+    @apply text-5xl font-extrabold;
   }
   h3 {
-    @apply text-[40px] font-bold;
+    @apply text-4xl font-extrabold;
   }
   h4 {
-    @apply text-[32px] font-bold;
+    @apply text-2xl font-extrabold;
+  }
+  h5 {
+    @apply text-lg font-extrabold;
   }
 }
 
