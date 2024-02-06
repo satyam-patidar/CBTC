@@ -1,5 +1,11 @@
+import Navbar from "./Navbar";
+
 const MainLayout = () => {
-  return <main className="bg-red-500">MainLayout</main>;
+  return (
+    <main>
+      <Navbar />
+    </main>
+  );
 };
 
 export default MainLayout;

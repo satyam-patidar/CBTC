@@ -1,7 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1 {
+    @apply text-[64px] font-extrabold;
+  }
+  h2 {
+    @apply text-[48px] font-extrabold;
+  }
+  h3 {
+    @apply text-[40px] font-bold;
+  }
+  h4 {
+    @apply text-[32px] font-bold;
+  }
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+}
+
 main {
   min-height: 100dvh;
+}
+
+.section-wrapper {
+  @apply px-20 lg:px-0 max-w-7xl mx-auto;
 }
