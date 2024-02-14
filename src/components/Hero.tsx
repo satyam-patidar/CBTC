@@ -52,7 +52,7 @@ const Hero = () => {
         </div>
 
         {/* right side */}
-        <div className="lg:max-h-[calc(100dvh-120px)] lg:col-span-1 lg:bg-black px-8 py-[30px] space-y-[30px] h-fit lg:h-full">
+        <div className="lg:max-h-[calc(100dvh-120px)] lg:col-span-1 md:bg-black px-8 py-[30px] space-y-[30px] h-fit lg:h-full">
           <h5 className="px-5">OUR MOST POPULAR SERVICES</h5>
           <hr className="border-[#344E71]" />
 
@@ -60,7 +60,7 @@ const Hero = () => {
             <img
               src={heroRight}
               alt="RightSide"
-              className="object-cover mb-6"
+              className="w-full object-cover mb-6"
             />
             <h4>Corporate Event</h4>
 
