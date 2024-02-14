@@ -26,10 +26,6 @@
   font-family: "Roboto", sans-serif;
 }
 
-main {
-  min-height: 100dvh;
-}
-
 .section-wrapper {
   @apply px-4 lg:px-10 max-w-7xl mx-auto;
 }
