@@ -63,7 +63,7 @@ const Services = () => {
           {eventDetails.map((item) => (
             <div
               key={item.id}
-              className="p-5 bg-black rounded-md"
+              className="p-5 bg-black/50 rounded-md"
               onMouseEnter={() => setHoveredId(item?.id)}
               onMouseLeave={() => setHoveredId(null)}
             >

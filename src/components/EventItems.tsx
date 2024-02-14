@@ -50,7 +50,7 @@ const EventItems = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {eventItems.map((item) => (
-            <div key={item.id} className="p-5 bg-black rounded-md">
+            <div key={item.id} className="p-5 bg-black/50 rounded-md">
               <h5>{item?.name}</h5>
 
               <img

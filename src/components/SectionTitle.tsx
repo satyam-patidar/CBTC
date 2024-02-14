@@ -11,7 +11,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, description }) => {
       <h2>{title}</h2>
       <p
         dangerouslySetInnerHTML={{ __html: description }}
-        className="text-center"
+        className="text-center text-[#CBD5E1]"
       />
     </div>
   );
