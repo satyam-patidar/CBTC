@@ -84,8 +84,8 @@ const Services = () => {
                 </div>
               )}
 
-              {item.features.map((feature, index) => (
-                <div className="flex items-center gap-3 mt-4" key={index}>
+              {item.features.map((feature) => (
+                <div className="flex items-center gap-3 mt-4">
                   <img src={checkMarkIcon} alt="CheckMarkIcon" />
                   <p>{feature}</p>
                 </div>
