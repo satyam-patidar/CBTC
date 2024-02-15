@@ -11,7 +11,7 @@ import galleryNine from "../assets/images/gallery/9.png";
 import galleryTen from "../assets/images/gallery/10.png";
 
 const Gallery = () => {
-  const events = [
+  const details = [
     {
       id: 1,
       title: "One day pass access all lecture",
@@ -35,11 +35,11 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="flex items-center min-h-dvh justify-center section-wrapper">
+    <section className="section-wrapper min-h-dvh flex items-center justify-center my-20 lg:my-0">
       <div className="w-full flex items-center justify-between gap-20 flex-col lg:flex-row">
         {/* left side */}
         <div className="space-y-9 flex-1">
-          <h2>Gallery</h2>
+          <h1>Gallery</h1>
 
           <p>
             Ut posuere felis arcu tellus tempus in in ultricies. Gravida id nibh
@@ -49,7 +49,7 @@ const Gallery = () => {
           </p>
 
           <div>
-            {events.map((item) => (
+            {details.map((item) => (
               <div key={item?.id}>
                 <div className="flex items-center gap-3 mt-4">
                   <img src={checkMarkIcon} alt="CheckMarkIcon" />

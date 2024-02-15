@@ -6,7 +6,7 @@
 
 @layer base {
   h1 {
-    @apply text-6xl font-extrabold;
+    @apply text-6xl font-extrabold bg-line-stroke w-fit;
   }
   h2 {
     @apply text-5xl font-extrabold;
@@ -28,4 +28,10 @@
 
 .section-wrapper {
   @apply px-4 lg:px-10 max-w-7xl mx-auto;
+}
+
+.bg-line-stroke {
+  background-image: url("../src/assets/line-stroke/image.png");
+  background-repeat: no-repeat;
+  background-position: bottom;
 }

@@ -2,7 +2,7 @@ import checkMarkIcon from "../assets/icons/checkmark-icon.png";
 import { Button } from "./ui/button";
 
 const Pricings = () => {
-  const pricingsDetails = [
+  const pricingDetails = [
     {
       id: 1,
       packageName: "STANDART",
@@ -41,7 +41,7 @@ const Pricings = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
-          {pricingsDetails.map((item) => (
+          {pricingDetails.map((item) => (
             <div
               key={item?.id}
               className="bg-slate-900 p-8 rounded-md group hover:bg-[#0038B4]  hover:transition-colors hover:duration-300 hover:ease-in-out hover:scale-110"

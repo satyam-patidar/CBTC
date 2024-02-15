@@ -52,7 +52,7 @@ const Reviews = () => {
     {
       id: 6,
       name: "Sarah Adams",
-      designation: "Operations Manager, UVW Corporation",
+      designation: "Operations Manager, UVW Co.",
       review:
         "Lacus vestibulum ultricies mi risus, duis non, volutpat nullam non. Magna congue nisi maecenas elit aliquet eu sed consectetur. Vitae quis cras vitae praesent morbi adipiscing purus consectetur mi.",
       imageUrl:
@@ -61,8 +61,8 @@ const Reviews = () => {
   ];
 
   return (
-    <main className="section-wrapper py-10 lg:py-20 space-y-20">
-      <h2>What Everyone Says</h2>
+    <main className="section-wrapper mt-20 lg:mt-[100px] space-y-20">
+      <h1>What Everyone Says</h1>
 
       <Swiper
         slidesPerView={1}

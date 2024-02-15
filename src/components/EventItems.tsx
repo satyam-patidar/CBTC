@@ -41,26 +41,24 @@ const EventItems = () => {
   ];
 
   return (
-    <section className="min-h-dvh section-wrapper flex items-center justify-center mt-[70px] lg:mt-0">
-      <div className="space-y-10">
-        <SectionTitle
-          title="Event Items"
-          description="Ut posuere felis arcu tellus tempus in in ultricies. Gravida id nibh ornare viverra. Ultrices <br/> faucibus neque velit risus ac id lorem."
-        />
+    <section className="section-wrapper mt-20 lg:mt-[100px] space-y-14">
+      <SectionTitle
+        title="Event Items"
+        description="Ut posuere felis arcu tellus tempus in in ultricies. Gravida id nibh ornare viverra. Ultrices <br/> faucibus neque velit risus ac id lorem."
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          {eventItems.map((item) => (
-            <div key={item.id} className="p-5 bg-black/50 rounded-md">
-              <h5>{item?.name}</h5>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {eventItems.map((item) => (
+          <div key={item.id} className="p-5 bg-black/50 rounded-md">
+            <h5>{item?.name}</h5>
 
-              <img
-                src={item?.image}
-                alt={item?.name}
-                className="object-cover mt-3 h-[200px] w-full rounded-md"
-              />
-            </div>
-          ))}
-        </div>
+            <img
+              src={item?.image}
+              alt={item?.name}
+              className="object-cover mt-3 h-[200px] w-full rounded-md"
+            />
+          </div>
+        ))}
       </div>
     </section>
   );
