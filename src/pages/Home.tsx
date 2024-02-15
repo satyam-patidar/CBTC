@@ -1,4 +1,5 @@
 import EventItems from "@/components/EventItems";
+import Gallery from "@/components/Gallery";
 import Hero from "@/components/Hero";
 import Pricings from "@/components/Pricings";
 import Reviews from "@/components/Reviews";
@@ -10,8 +11,8 @@ const Home = () => {
       <Hero />
       <Services />
       <EventItems />
+      <Gallery />
       <Pricings />
-
       <Reviews />
     </main>
   );

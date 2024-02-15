@@ -1,10 +1,10 @@
 import SectionTitle from "./SectionTitle";
-import itemOne from "../assets/images/item-1.png";
-import itemTwo from "../assets/images/item-2.png";
-import itemThree from "../assets/images/item-3.png";
-import itemFour from "../assets/images/item-4.png";
-import itemFive from "../assets/images/item-5.png";
-import itemSix from "../assets/images/item-6.png";
+import itemOne from "../assets/images/item/1.png";
+import itemTwo from "../assets/images/item/2.png";
+import itemThree from "../assets/images/item/3.png";
+import itemFour from "../assets/images/item/4.png";
+import itemFive from "../assets/images/item/5.png";
+import itemSix from "../assets/images/item/6.png";
 
 const EventItems = () => {
   const eventItems = [

@@ -5,7 +5,7 @@ import checkMarkIcon from "../assets/icons/checkmark-icon.png";
 import { Button } from "./ui/button";
 
 const Hero = () => {
-  const event = [
+  const events = [
     {
       id: 1,
       title: "One day pass access all lecture",
@@ -64,7 +64,7 @@ const Hero = () => {
             />
             <h4>Corporate Event</h4>
 
-            {event.map((item) => (
+            {events.map((item) => (
               <div key={item?.id}>
                 <div className="mt-4 flex items-center gap-3">
                   <img src={checkMarkIcon} alt="CheckMarkIcon" />
