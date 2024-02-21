@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home";
-import Dashboard from "@/layout/Dashboard";
+import DashboardLayout from "@/layout/DashboardLayout";
 import RecentEvents from "@/pages/RecentEvents";
 import EventItems from "@/pages/EventItems";
 
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: <DashboardLayout />,
         children: [
           {
             path: "recent-events",
