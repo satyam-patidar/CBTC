@@ -20,6 +20,7 @@ const Navbar = () => {
         {/* right side */}
         <div className="flex gap-4">
           <Link to="/">Home</Link>
+          <Link to="/dashboard/recent-events">Dashboard</Link>
           <Link to="/">About</Link>
           <Link to="/">Contact</Link>
         </div>
