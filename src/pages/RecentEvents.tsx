@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { Modal } from "antd";
-import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-// Define an interface for the form data
-interface IFormValues {
+// Define interface for recent events
+interface IRecentEvents {
+  _id?: string;
   eventName: string;
   organizer: string;
   imageURL: string;
@@ -22,7 +33,7 @@ const RecentEvents = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<IFormValues>();
+  } = useForm<IRecentEvents>();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -33,7 +44,15 @@ const RecentEvents = () => {
     reset();
   };
 
-  const onSubmit: SubmitHandler<IFormValues> = async (data) => {
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["recentItems"],
+    queryFn: async () =>
+      await axios
+        .get("https://event-360-serverr.vercel.app/api/v1/recent-events")
+        .then((res) => res?.data?.data),
+  });
+
+  const onSubmit: SubmitHandler<IRecentEvents> = async (data) => {
     setIsLoading(true);
     try {
       const res = await axios.post(
@@ -44,6 +63,7 @@ const RecentEvents = () => {
       if (res?.data?.success === true) {
         setIsLoading(false);
         setIsModalOpen(false);
+        refetch();
         reset();
       }
     } catch (error) {
@@ -51,6 +71,45 @@ const RecentEvents = () => {
       console.log(error);
     }
   };
+
+  const handleDelete = async (id: string | undefined) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axios.delete(
+            `https://event-360-serverr.vercel.app/api/v1/recent-events/${id}`
+          );
+
+          if (res?.data?.success === true) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Selected item has been deleted.",
+              icon: "success",
+            });
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center">
+        <p>An error has occurred: {error?.message}</p>
+      </div>
+    );
+  }
 
   return (
     <main>
@@ -124,6 +183,50 @@ const RecentEvents = () => {
           </form>
         </Modal>
       </div>
+
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Image</TableHead>
+            <TableHead>Event Name</TableHead>
+            <TableHead>Update Action</TableHead>
+            <TableHead>Delete Action</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        {data?.map((item: IRecentEvents) => (
+          <TableBody key={item?._id}>
+            <TableRow>
+              <TableCell>
+                <img
+                  src={item.imageURL}
+                  alt={item?.eventName}
+                  className="rounded-full h-[70px] w-[70px] object-cover"
+                />
+              </TableCell>
+
+              <TableCell className="font-medium">{item.eventName}</TableCell>
+
+              <TableCell>
+                <Button className="rounded-full" size="sm">
+                  Update
+                </Button>
+              </TableCell>
+
+              <TableCell>
+                <Button
+                  className="rounded-full"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => handleDelete(item?._id)}
+                >
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        ))}
+      </Table>
     </main>
   );
 };

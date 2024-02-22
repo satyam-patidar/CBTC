@@ -4,7 +4,7 @@ import SectionTitle from "./SectionTitle";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-// Define interface for event item
+// Define interface for event items
 interface IEventItems {
   _id: string;
   eventName: string;

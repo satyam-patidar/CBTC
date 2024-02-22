@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "react-loading-skeleton/dist/skeleton.css";
 
-// Define interface for event item
+// Define interface for recent events
 interface IRecentEvents {
   _id: string;
   eventName: string;
@@ -41,7 +41,7 @@ const RecentEvents = () => {
       />
 
       {isLoading ? (
-        <div>
+        <>
           <Skeleton
             height={200}
             baseColor="#02011B"
@@ -60,7 +60,7 @@ const RecentEvents = () => {
             highlightColor="#384259"
             className="mb-2"
           />
-        </div>
+        </>
       ) : (
         <Swiper
           slidesPerView={1}

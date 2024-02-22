@@ -5,9 +5,19 @@ import { Modal } from "antd";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useQuery } from "@tanstack/react-query";
 
-// Define an interface for the form data
-interface IFormValues {
+// Define interface for event items
+interface IEventItems {
+  _id?: string;
   eventName: string;
   imageURL: string;
 }
@@ -21,7 +31,7 @@ const EventItems = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<IFormValues>();
+  } = useForm<IEventItems>();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -32,7 +42,7 @@ const EventItems = () => {
     reset();
   };
 
-  const onSubmit: SubmitHandler<IFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<IEventItems> = async (data) => {
     setIsLoading(true);
     try {
       const res = await axios.post(
@@ -50,6 +60,22 @@ const EventItems = () => {
       console.log(error);
     }
   };
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["eventItems"],
+    queryFn: async () =>
+      await axios
+        .get("https://event-360-serverr.vercel.app/api/v1/event-items")
+        .then((res) => res?.data?.data),
+  });
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center">
+        <p>An error has occurred: {error?.message}</p>
+      </div>
+    );
+  }
 
   return (
     <main>
@@ -108,6 +134,49 @@ const EventItems = () => {
           </form>
         </Modal>
       </div>
+
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Image</TableHead>
+            <TableHead>Event Name</TableHead>
+            <TableHead>Update Action</TableHead>
+            <TableHead>Delete Action</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        {data?.map((item: IEventItems) => (
+          <TableBody key={item?._id}>
+            <TableRow>
+              <TableCell>
+                <img
+                  src={item.imageURL}
+                  alt={item?.eventName}
+                  className="rounded-full h-[70px] w-[70px] object-cover"
+                />
+              </TableCell>
+
+              <TableCell className="font-medium">{item.eventName}</TableCell>
+
+              <TableCell>
+                <Button className="rounded-full" size="sm">
+                  Update
+                </Button>
+              </TableCell>
+
+              <TableCell>
+                <Button
+                  className="rounded-full"
+                  variant="destructive"
+                  size="sm"
+                >
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        ))}
+      </Table>
     </main>
   );
 };
