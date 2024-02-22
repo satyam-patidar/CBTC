@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 // Define an interface for the form data
-interface FormValues {
+interface IFormValues {
   eventName: string;
   organizer: string;
   imageURL: string;
@@ -22,7 +22,7 @@ const RecentEvents = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<IFormValues>();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -33,7 +33,7 @@ const RecentEvents = () => {
     reset();
   };
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<IFormValues> = async (data) => {
     setIsLoading(true);
     try {
       const res = await axios.post(

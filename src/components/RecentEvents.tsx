@@ -10,7 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 // Define interface for event item
 interface IRecentEvents {
-  _id: number;
+  _id: string;
   eventName: string;
   organizer: string;
   imageURL: string;

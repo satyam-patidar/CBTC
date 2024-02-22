@@ -1,44 +1,32 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import SectionTitle from "./SectionTitle";
-import itemOne from "../assets/images/item/1.png";
-import itemTwo from "../assets/images/item/2.png";
-import itemThree from "../assets/images/item/3.png";
-import itemFour from "../assets/images/item/4.png";
-import itemFive from "../assets/images/item/5.png";
-import itemSix from "../assets/images/item/6.png";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
+// Define interface for event item
+interface IEventItems {
+  _id: string;
+  eventName: string;
+  imageURL: string;
+}
 
 const EventItems = () => {
-  const eventItems = [
-    {
-      id: 1,
-      name: "Event Item - 1",
-      image: itemOne,
-    },
-    {
-      id: 2,
-      name: "Event Item - 2",
-      image: itemTwo,
-    },
-    {
-      id: 3,
-      name: "Event Item - 3",
-      image: itemThree,
-    },
-    {
-      id: 4,
-      name: "Event Item - 4",
-      image: itemFour,
-    },
-    {
-      id: 5,
-      name: "Event Item - 5",
-      image: itemFive,
-    },
-    {
-      id: 6,
-      name: "Event Item - 6",
-      image: itemSix,
-    },
-  ];
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["eventItems"],
+    queryFn: async () =>
+      await axios
+        .get("https://event-360-serverr.vercel.app/api/v1/event-items")
+        .then((res) => res?.data?.data),
+  });
+
+  if (error) {
+    return (
+      <div className="section-wrapper my-20 lg:my-[100px]">
+        <p>An error has occurred: {error?.message}</p>
+      </div>
+    );
+  }
 
   return (
     <section className="section-wrapper mt-20 lg:mt-[100px] space-y-14">
@@ -48,17 +36,33 @@ const EventItems = () => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {eventItems.map((item) => (
-          <div key={item.id} className="p-5 bg-black/50 rounded-md">
-            <h5>{item?.name}</h5>
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, index) => (
+              <div key={index}>
+                <Skeleton
+                  height={25}
+                  baseColor="#02011B"
+                  highlightColor="#384259"
+                  className="mb-2"
+                />
+                <Skeleton
+                  height={200}
+                  baseColor="#02011B"
+                  highlightColor="#384259"
+                />
+              </div>
+            ))
+          : data.map((item: IEventItems) => (
+              <div key={item._id} className="p-5 bg-black/50 rounded-md">
+                <h5>{item?.eventName}</h5>
 
-            <img
-              src={item?.image}
-              alt={item?.name}
-              className="object-cover mt-3 h-[200px] w-full rounded-md"
-            />
-          </div>
-        ))}
+                <img
+                  src={item?.imageURL}
+                  alt={item?.eventName}
+                  className="object-cover mt-3 h-[200px] w-full rounded-md"
+                />
+              </div>
+            ))}
       </div>
     </section>
   );
