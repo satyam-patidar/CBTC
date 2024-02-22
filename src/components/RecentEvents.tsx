@@ -1,54 +1,37 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import SectionTitle from "./SectionTitle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import Skeleton from "react-loading-skeleton";
 import "swiper/css";
 import "swiper/css/navigation";
+import "react-loading-skeleton/dist/skeleton.css";
+
+// Define interface for event item
+interface IRecentEvents {
+  _id: number;
+  eventName: string;
+  organizer: string;
+  imageURL: string;
+}
 
 const RecentEvents = () => {
-  const eventsData = [
-    {
-      id: 1,
-      title: "Flower Decorations",
-      by: "by Melvina Spring",
-      imageUrl:
-        "https://images.pexels.com/photos/10152378/pexels-photo-10152378.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      id: 2,
-      title: "Catering Services",
-      by: "by Chef Gordon",
-      imageUrl:
-        "https://images.pexels.com/photos/6283833/pexels-photo-6283833.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      id: 3,
-      title: "Photography Package",
-      by: "by Stella Lens",
-      imageUrl:
-        "https://images.pexels.com/photos/13710029/pexels-photo-13710029.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      id: 4,
-      title: "Live Music Performance",
-      by: "by Symphony Sounds",
-      imageUrl:
-        "https://images.pexels.com/photos/14746366/pexels-photo-14746366.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      id: 5,
-      title: "Event Planning Consultation",
-      by: "by Event Pro",
-      imageUrl:
-        "https://images.pexels.com/photos/7648470/pexels-photo-7648470.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      id: 6,
-      title: "Venue Decoration",
-      by: "by Decor Experts",
-      imageUrl:
-        "https://images.pexels.com/photos/17294787/pexels-photo-17294787/free-photo-of-elegant-table-settings-in-a-modern-restaurant.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-  ];
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["recentItems"],
+    queryFn: async () =>
+      await axios
+        .get("https://event-360-serverr.vercel.app/api/v1/recent-events")
+        .then((res) => res?.data?.data),
+  });
+
+  if (error) {
+    return (
+      <div className="section-wrapper my-20 lg:my-[100px]">
+        <p>An error has occurred: {error?.message}</p>
+      </div>
+    );
+  }
 
   return (
     <section className="section-wrapper my-20 lg:my-[100px] space-y-20">
@@ -57,42 +40,65 @@ const RecentEvents = () => {
         description="Ut posuere felis arcu tellus tempus in in ultricies. Gravida id nibh ornare viverra. Ultrices faucibus neque velit <br/> risus ac id lorem."
       />
 
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={20}
-        pagination={{
-          clickable: true,
-        }}
-        breakpoints={{
-          1024: {
-            slidesPerView: 2,
-          },
-          1280: {
-            slidesPerView: 3,
-          },
-        }}
-        navigation={true}
-        modules={[Navigation]}
-        className="mySwiper"
-      >
-        {eventsData.map((item) => (
-          <SwiperSlide
-            key={item?.id}
-            className="space-y-4 bg-black/50 rounded-md"
-          >
-            <img
-              src={item?.imageUrl}
-              alt={item?.title}
-              className="h-[220px] w-full object-cover rounded-t-md"
-            />
+      {isLoading ? (
+        <div>
+          <Skeleton
+            height={200}
+            baseColor="#02011B"
+            highlightColor="#384259"
+            className="mb-2"
+          />
+          <Skeleton
+            height={25}
+            baseColor="#02011B"
+            highlightColor="#384259"
+            className="mb-2"
+          />
+          <Skeleton
+            height={25}
+            baseColor="#02011B"
+            highlightColor="#384259"
+            className="mb-2"
+          />
+        </div>
+      ) : (
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={20}
+          pagination={{
+            clickable: true,
+          }}
+          breakpoints={{
+            1024: {
+              slidesPerView: 2,
+            },
+            1280: {
+              slidesPerView: 3,
+            },
+          }}
+          navigation={true}
+          modules={[Navigation]}
+          className="mySwiper"
+        >
+          {data.map((item: IRecentEvents) => (
+            <SwiperSlide
+              key={item?._id}
+              className="space-y-4 bg-black/50 rounded-md"
+            >
+              <img
+                src={item?.imageURL}
+                alt={item?.eventName}
+                className="h-[220px] w-full object-cover rounded-t-md"
+              />
 
-            <div className="p-4">
-              <p>{item?.title}</p>
-              <p className="text-[#475569]">{item?.by}</p>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+              <div className="p-4">
+                <p>{item?.eventName}</p>
+                <p className="text-[#475569]">{item?.organizer}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </section>
   );
 };
