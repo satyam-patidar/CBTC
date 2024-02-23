@@ -14,6 +14,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
+import Skeleton from "react-loading-skeleton";
+import Swal from "sweetalert2";
 
 // Define interface for event items
 interface IEventItems {
@@ -42,6 +44,14 @@ const EventItems = () => {
     reset();
   };
 
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["eventItems"],
+    queryFn: async () =>
+      await axios
+        .get("https://event-360-serverr.vercel.app/api/v1/event-items")
+        .then((res) => res?.data?.data),
+  });
+
   const onSubmit: SubmitHandler<IEventItems> = async (data) => {
     setIsLoading(true);
     try {
@@ -53,6 +63,14 @@ const EventItems = () => {
       if (res?.data?.success === true) {
         setIsLoading(false);
         setIsModalOpen(false);
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Event item has been added",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         reset();
       }
     } catch (error) {
@@ -61,13 +79,36 @@ const EventItems = () => {
     }
   };
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["eventItems"],
-    queryFn: async () =>
-      await axios
-        .get("https://event-360-serverr.vercel.app/api/v1/event-items")
-        .then((res) => res?.data?.data),
-  });
+  const handleDelete = async (id: string | undefined) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axios.delete(
+            `https://event-360-serverr.vercel.app/api/v1/event-items/${id}`
+          );
+
+          if (res?.data?.success === true) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Selected item has been deleted.",
+              icon: "success",
+            });
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (error) {
     return (
@@ -135,48 +176,64 @@ const EventItems = () => {
         </Modal>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Image</TableHead>
-            <TableHead>Event Name</TableHead>
-            <TableHead>Update Action</TableHead>
-            <TableHead>Delete Action</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        {data?.map((item: IEventItems) => (
-          <TableBody key={item?._id}>
+      {isLoading ? (
+        <div className="mt-5">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index}>
+              <Skeleton
+                height={100}
+                baseColor="#02011B"
+                highlightColor="#384259"
+                className="mb-2"
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell>
-                <img
-                  src={item.imageURL}
-                  alt={item?.eventName}
-                  className="rounded-full h-[70px] w-[70px] object-cover"
-                />
-              </TableCell>
-
-              <TableCell className="font-medium">{item.eventName}</TableCell>
-
-              <TableCell>
-                <Button className="rounded-full" size="sm">
-                  Update
-                </Button>
-              </TableCell>
-
-              <TableCell>
-                <Button
-                  className="rounded-full"
-                  variant="destructive"
-                  size="sm"
-                >
-                  Delete
-                </Button>
-              </TableCell>
+              <TableHead className="w-[100px]">Image</TableHead>
+              <TableHead>Event Name</TableHead>
+              <TableHead>Update Action</TableHead>
+              <TableHead>Delete Action</TableHead>
             </TableRow>
-          </TableBody>
-        ))}
-      </Table>
+          </TableHeader>
+
+          {data?.map((item: IEventItems) => (
+            <TableBody key={item?._id}>
+              <TableRow>
+                <TableCell>
+                  <img
+                    src={item.imageURL}
+                    alt={item?.eventName}
+                    className="rounded-full h-[70px] w-[70px] object-cover"
+                  />
+                </TableCell>
+
+                <TableCell className="font-medium">{item.eventName}</TableCell>
+
+                <TableCell>
+                  <Button className="rounded-full" size="sm">
+                    Update
+                  </Button>
+                </TableCell>
+
+                <TableCell>
+                  <Button
+                    onClick={() => handleDelete(item?._id)}
+                    className="rounded-full"
+                    variant="destructive"
+                    size="sm"
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ))}
+        </Table>
+      )}
     </main>
   );
 };

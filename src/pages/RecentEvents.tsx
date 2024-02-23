@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Skeleton from "react-loading-skeleton";
 
 // Define interface for recent events
 interface IRecentEvents {
@@ -64,6 +65,13 @@ const RecentEvents = () => {
         setIsLoading(false);
         setIsModalOpen(false);
         refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Recent event has been added",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         reset();
       }
     } catch (error) {
@@ -184,49 +192,64 @@ const RecentEvents = () => {
         </Modal>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Image</TableHead>
-            <TableHead>Event Name</TableHead>
-            <TableHead>Update Action</TableHead>
-            <TableHead>Delete Action</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        {data?.map((item: IRecentEvents) => (
-          <TableBody key={item?._id}>
+      {isLoading ? (
+        <div className="mt-5">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index}>
+              <Skeleton
+                height={100}
+                baseColor="#02011B"
+                highlightColor="#384259"
+                className="mb-2"
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell>
-                <img
-                  src={item.imageURL}
-                  alt={item?.eventName}
-                  className="rounded-full h-[70px] w-[70px] object-cover"
-                />
-              </TableCell>
-
-              <TableCell className="font-medium">{item.eventName}</TableCell>
-
-              <TableCell>
-                <Button className="rounded-full" size="sm">
-                  Update
-                </Button>
-              </TableCell>
-
-              <TableCell>
-                <Button
-                  className="rounded-full"
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => handleDelete(item?._id)}
-                >
-                  Delete
-                </Button>
-              </TableCell>
+              <TableHead className="w-[100px]">Image</TableHead>
+              <TableHead>Event Name</TableHead>
+              <TableHead>Update Action</TableHead>
+              <TableHead>Delete Action</TableHead>
             </TableRow>
-          </TableBody>
-        ))}
-      </Table>
+          </TableHeader>
+
+          {data?.map((item: IRecentEvents) => (
+            <TableBody key={item?._id}>
+              <TableRow>
+                <TableCell>
+                  <img
+                    src={item.imageURL}
+                    alt={item?.eventName}
+                    className="rounded-full h-[70px] w-[70px] object-cover"
+                  />
+                </TableCell>
+
+                <TableCell className="font-medium">{item.eventName}</TableCell>
+
+                <TableCell>
+                  <Button className="rounded-full" size="sm">
+                    Update
+                  </Button>
+                </TableCell>
+
+                <TableCell>
+                  <Button
+                    onClick={() => handleDelete(item?._id)}
+                    className="rounded-full"
+                    variant="destructive"
+                    size="sm"
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ))}
+        </Table>
+      )}
     </main>
   );
 };
