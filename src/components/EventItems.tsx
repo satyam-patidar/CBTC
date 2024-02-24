@@ -1,5 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import useFetchData from "@/hooks/useFetchData";
 import SectionTitle from "./SectionTitle";
 import Skeleton from "react-loading-skeleton";
 
@@ -10,12 +9,9 @@ interface EventItemProps {
 }
 
 const EventItems = () => {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["eventItems"],
-    queryFn: async () =>
-      await axios
-        .get("https://event-360-serverr.vercel.app/api/v1/event-items")
-        .then((res) => res?.data?.data),
+  const { isLoading, error, data } = useFetchData({
+    queryKey: "eventItems",
+    url: "https://event-360-serverr.vercel.app/api/v1/event-items",
   });
 
   if (error) {

@@ -1,5 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import useFetchData from "@/hooks/useFetchData";
 import SectionTitle from "./SectionTitle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -16,12 +15,9 @@ interface RecentEventProps {
 }
 
 const RecentEvents = () => {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["recentItems"],
-    queryFn: async () =>
-      await axios
-        .get("https://event-360-serverr.vercel.app/api/v1/recent-events")
-        .then((res) => res?.data?.data),
+  const { isLoading, error, data } = useFetchData({
+    queryKey: "recentEvents",
+    url: "https://event-360-serverr.vercel.app/api/v1/recent-events",
   });
 
   if (error) {
