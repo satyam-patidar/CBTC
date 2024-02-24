@@ -18,7 +18,7 @@ import {
 import Skeleton from "react-loading-skeleton";
 
 // Define interface for recent events
-interface IRecentEvents {
+interface RecentEventProps {
   _id?: string;
   eventName: string;
   organizer: string;
@@ -34,7 +34,7 @@ const RecentEvents = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<IRecentEvents>();
+  } = useForm<RecentEventProps>();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -53,7 +53,7 @@ const RecentEvents = () => {
         .then((res) => res?.data?.data),
   });
 
-  const onSubmit: SubmitHandler<IRecentEvents> = async (data) => {
+  const onSubmit: SubmitHandler<RecentEventProps> = async (data) => {
     setIsLoading(true);
     try {
       const res = await axios.post(
@@ -113,7 +113,7 @@ const RecentEvents = () => {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="h-full flex items-center justify-center">
         <p>An error has occurred: {error?.message}</p>
       </div>
     );
@@ -216,7 +216,7 @@ const RecentEvents = () => {
             </TableRow>
           </TableHeader>
 
-          {data?.map((item: IRecentEvents) => (
+          {data?.map((item: RecentEventProps) => (
             <TableBody key={item?._id}>
               <TableRow>
                 <TableCell>

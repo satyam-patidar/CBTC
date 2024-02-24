@@ -3,8 +3,7 @@ import axios from "axios";
 import SectionTitle from "./SectionTitle";
 import Skeleton from "react-loading-skeleton";
 
-// Define interface for event items
-interface IEventItems {
+interface EventItemProps {
   _id: string;
   eventName: string;
   imageURL: string;
@@ -51,7 +50,7 @@ const EventItems = () => {
                 />
               </div>
             ))
-          : data.map((item: IEventItems) => (
+          : data.map((item: EventItemProps) => (
               <div key={item._id} className="p-5 bg-black/50 rounded-md">
                 <h5>{item?.eventName}</h5>
 

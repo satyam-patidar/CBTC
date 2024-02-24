@@ -1,58 +1,37 @@
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import useFetchData from "@/hooks/useFetchData";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
-import { Modal } from "antd";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
-import Skeleton from "react-loading-skeleton";
 import Swal from "sweetalert2";
-
-// Define interface for event items
-interface IEventItems {
-  _id?: string;
-  eventName: string;
-  imageURL: string;
-}
+import { Button } from "@/components/ui/button";
+import { Modal } from "antd";
+import FormWrapper from "@/components/forms/FormWrapper";
+import EventItemsForm from "@/components/forms/EventItemsForm";
+import FormSubmit from "@/components/forms/FormSubmit";
+import ShowEventItems from "@/components/dashboard/ShowEventItems";
 
 const EventItems = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalOpen, setIsModalOpen] = useState(false);
   const [loading, setIsLoading] = useState(false);
+
+  const { error, refetch } = useFetchData({
+    queryKey: "eventItems",
+    url: "https://event-360-serverr.vercel.app/api/v1/event-items",
+  });
 
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
-  } = useForm<IEventItems>();
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  } = useForm();
 
   const handleCancel = () => {
-    setIsModalOpen(false);
     reset();
+    setIsModalOpen(false);
   };
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["eventItems"],
-    queryFn: async () =>
-      await axios
-        .get("https://event-360-serverr.vercel.app/api/v1/event-items")
-        .then((res) => res?.data?.data),
-  });
-
-  const onSubmit: SubmitHandler<IEventItems> = async (data) => {
+  const onSubmit = async (data: FieldValues) => {
     setIsLoading(true);
     try {
       const res = await axios.post(
@@ -79,40 +58,9 @@ const EventItems = () => {
     }
   };
 
-  const handleDelete = async (id: string | undefined) => {
-    try {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const res = await axios.delete(
-            `https://event-360-serverr.vercel.app/api/v1/event-items/${id}`
-          );
-
-          if (res?.data?.success === true) {
-            refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Selected item has been deleted.",
-              icon: "success",
-            });
-          }
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   if (error) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="h-full flex items-center justify-center">
         <p>An error has occurred: {error?.message}</p>
       </div>
     );
@@ -121,119 +69,24 @@ const EventItems = () => {
   return (
     <main>
       <div className="flex justify-end">
-        <Button onClick={showModal} className="rounded-full">
+        <Button onClick={() => setIsModalOpen(true)} className="rounded-full">
           Add Events
         </Button>
 
         <Modal
           title="Add New Recent Events"
-          open={isModalOpen}
+          open={modalOpen}
           onCancel={handleCancel}
         >
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-            <div className="space-y-1">
-              <label>Event Name</label>
-              <input
-                type="text"
-                className="w-full rounded px-3 py-2 focus:outline-none border"
-                {...register("eventName", { required: true })}
-              />
-
-              {errors?.eventName && (
-                <span className="text-red-500 text-sm">
-                  Event name is required
-                </span>
-              )}
-            </div>
-
-            <div className="space-y-1">
-              <label>Image URL</label>
-              <input
-                type="url"
-                className="w-full rounded px-3 py-2 focus:outline-none border"
-                {...register("imageURL", { required: true })}
-              />
-
-              {errors?.imageURL && (
-                <span className="text-red-500 text-sm">
-                  Image URL is required
-                </span>
-              )}
-            </div>
-
-            <div className="flex justify-end">
-              <Button
-                type="submit"
-                className={cn(
-                  "rounded-full",
-                  loading && buttonVariants({ variant: "loading" })
-                )}
-              >
-                {loading ? <LoadingSpinner /> : "Submit"}
-              </Button>
-            </div>
-          </form>
+          <FormWrapper
+            onSubmit={handleSubmit(onSubmit) as SubmitHandler<FieldValues>}
+          >
+            <EventItemsForm register={register} errors={errors} />
+            <FormSubmit loading={loading} title="Submit" />
+          </FormWrapper>
         </Modal>
       </div>
-
-      {isLoading ? (
-        <div className="mt-5">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index}>
-              <Skeleton
-                height={100}
-                baseColor="#02011B"
-                highlightColor="#384259"
-                className="mb-2"
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Image</TableHead>
-              <TableHead>Event Name</TableHead>
-              <TableHead>Update Action</TableHead>
-              <TableHead>Delete Action</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          {data?.map((item: IEventItems) => (
-            <TableBody key={item?._id}>
-              <TableRow>
-                <TableCell>
-                  <img
-                    src={item.imageURL}
-                    alt={item?.eventName}
-                    className="rounded-full h-[70px] w-[70px] object-cover"
-                  />
-                </TableCell>
-
-                <TableCell className="font-medium">{item.eventName}</TableCell>
-
-                <TableCell>
-                  <Button className="rounded-full" size="sm">
-                    Update
-                  </Button>
-                </TableCell>
-
-                <TableCell>
-                  <Button
-                    onClick={() => handleDelete(item?._id)}
-                    className="rounded-full"
-                    variant="destructive"
-                    size="sm"
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          ))}
-        </Table>
-      )}
+      <ShowEventItems />
     </main>
   );
 };

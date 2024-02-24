@@ -2,13 +2,24 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { GrLanguage } from "react-icons/gr";
 import { FaEuroSign } from "react-icons/fa";
 import { BiUniversalAccess } from "react-icons/bi";
+import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+
   return (
     <footer className="text-light-sky">
       <hr className="border-[#334155]" />
 
-      <div className="section-wrapper grid grid-cols-1 lg:grid-cols-6 gap-x-[48px] gap-y-[32px] py-[48px]">
+      <div
+        className={cn(
+          "grid grid-cols-1 lg:grid-cols-6 gap-x-[48px] gap-y-[32px] py-[48px]",
+          location.pathname.startsWith("/dashboard")
+            ? "px-5"
+            : "section-wrapper"
+        )}
+      >
         <div>
           <h4 className="text-white">
             Event {""}

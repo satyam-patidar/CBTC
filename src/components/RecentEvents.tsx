@@ -8,8 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "react-loading-skeleton/dist/skeleton.css";
 
-// Define interface for recent events
-interface IRecentEvents {
+interface RecentEventProps {
   _id: string;
   eventName: string;
   organizer: string;
@@ -50,12 +49,7 @@ const RecentEvents = () => {
           />
           <Skeleton
             height={25}
-            baseColor="#02011B"
-            highlightColor="#384259"
-            className="mb-2"
-          />
-          <Skeleton
-            height={25}
+            count={2}
             baseColor="#02011B"
             highlightColor="#384259"
             className="mb-2"
@@ -80,7 +74,7 @@ const RecentEvents = () => {
           modules={[Navigation]}
           className="mySwiper"
         >
-          {data.map((item: IRecentEvents) => (
+          {data.map((item: RecentEventProps) => (
             <SwiperSlide
               key={item?._id}
               className="space-y-4 bg-black/50 rounded-md"

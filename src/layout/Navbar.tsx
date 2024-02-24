@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
     <nav className="bg-midnight-blue">
-      <div className="section-wrapper py-[24px] flex items-center justify-between">
+      <div
+        className={cn(
+          "py-[24px] flex items-center justify-between",
+          location.pathname.startsWith("/dashboard")
+            ? "px-5"
+            : "section-wrapper"
+        )}
+      >
         {/* left side */}
         <div>
           <h4>
