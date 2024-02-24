@@ -74,7 +74,7 @@ const EventItems = () => {
         </Button>
 
         <Modal
-          title="Add New Recent Events"
+          title="Add New Event Items"
           open={modalOpen}
           onCancel={handleCancel}
         >
@@ -86,6 +86,7 @@ const EventItems = () => {
           </FormWrapper>
         </Modal>
       </div>
+
       <ShowEventItems />
     </main>
   );

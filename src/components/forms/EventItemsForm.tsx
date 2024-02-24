@@ -1,7 +1,6 @@
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface EventItemProps {
-  _id: string;
   eventName: string;
   imageURL: string;
 }

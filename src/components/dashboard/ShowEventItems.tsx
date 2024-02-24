@@ -186,7 +186,7 @@ const ShowEventItems = () => {
       )}
 
       <Modal
-        title="Update Recent Events"
+        title="Update Event Items"
         open={modalOpen}
         onCancel={handleCancel}
       >
