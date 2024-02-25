@@ -3,6 +3,9 @@ import heroRight from "../assets/images/corporate.png";
 import linear from "../assets/images/linear.png";
 import checkMarkIcon from "../assets/icons/checkmark-icon.png";
 import { Button } from "./ui/button";
+import { useEffect } from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const Hero = () => {
   const details = [
@@ -24,11 +27,18 @@ const Hero = () => {
     },
   ];
 
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
+
   return (
     <section className="bg-midnight-blue lg:pb-20">
       <div className="section-wrapper grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* left side */}
-        <div className="lg:max-h-[calc(100dvh-120px)] lg:col-span-2 relative">
+        <div
+          data-aos="fade-up"
+          className="lg:max-h-[calc(100dvh-120px)] lg:col-span-2 relative"
+        >
           <img
             src={heroLeft}
             alt="LeftSide"
@@ -52,7 +62,10 @@ const Hero = () => {
         </div>
 
         {/* right side */}
-        <div className="lg:max-h-[calc(100dvh-120px)] lg:col-span-1 md:bg-black/50 px-8 py-[30px] space-y-[30px] h-fit lg:h-full">
+        <div
+          data-aos="fade-down"
+          className="lg:max-h-[calc(100dvh-120px)] lg:col-span-1 md:bg-black/50 px-8 py-[30px] space-y-[30px] h-fit lg:h-full"
+        >
           <h5 className="px-5">OUR MOST POPULAR SERVICES</h5>
           <hr className="border-[#344E71]" />
 

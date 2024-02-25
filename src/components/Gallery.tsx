@@ -38,7 +38,7 @@ const Gallery = () => {
     <section className="section-wrapper min-h-dvh flex items-center justify-center my-20 lg:my-0">
       <div className="w-full flex items-center justify-between gap-20 flex-col lg:flex-row">
         {/* left side */}
-        <div className="space-y-9 flex-1">
+        <div data-aos="fade-right" className="space-y-9 flex-1">
           <h1>Gallery</h1>
 
           <p>
@@ -61,7 +61,7 @@ const Gallery = () => {
         </div>
 
         {/* right side */}
-        <div className="flex-1 flex items-center">
+        <div data-aos="fade-left" className="flex-1 flex items-center">
           <div className="flex flex-col">
             <img className="ps-5" src={galleryOne} alt="" />
             <img src={galleryTwo} alt="" />

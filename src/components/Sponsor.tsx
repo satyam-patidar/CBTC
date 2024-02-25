@@ -23,7 +23,7 @@ const sponsors = [
 const Sponsor = () => {
   return (
     <section className="section-wrapper my-20 lg:my-[100px] space-y-16">
-      <div className="flex items-center flex-col gap-3">
+      <div data-aos="fade-down" className="flex items-center flex-col gap-3">
         <p className="text-sm font-semibold">Our Sponsors</p>
         <h3>We're Proudly Supported By</h3>
       </div>
@@ -31,6 +31,8 @@ const Sponsor = () => {
       <div className="flex flex-col justify-center items-center gap-5">
         {sponsors.map((item, index) => (
           <div
+            data-aos="fade-down"
+            data-aos-duration="2000"
             key={index}
             className="p-5 bg-black shadow-lg rounded-lg flex gap-10 items-center"
           >
@@ -38,7 +40,7 @@ const Sponsor = () => {
               <img
                 src={item?.image}
                 alt={item?.name}
-                className="rounded-md size-14 object-cover"
+                className="rounded-md size-9 lg:size-14 object-cover"
               />
             </div>
             <div>
@@ -55,7 +57,11 @@ const Sponsor = () => {
         ))}
       </div>
 
-      <div className="flex items-center flex-col gap-3">
+      <div
+        data-aos="fade-down"
+        data-aos-duration="3000"
+        className="flex items-center flex-col gap-3"
+      >
         <h4>Interested in Becoming a Sponsor?</h4>
         <p className="brightness-90">
           Join us in making this event a success and reach a wider audience with
