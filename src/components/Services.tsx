@@ -66,7 +66,7 @@ const Services = () => {
             className={cn(
               "p-5 bg-black/50 rounded-md",
               hoveredId === item?.id &&
-                "transition-all duration-500 ease-in-out scale-105"
+                "cursor-pointer transition-all duration-500 ease-in-out scale-105"
             )}
             onMouseEnter={() => setHoveredId(item?.id)}
             onMouseLeave={() => setHoveredId(null)}

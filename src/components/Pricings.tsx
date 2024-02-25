@@ -60,7 +60,7 @@ const Pricings = () => {
                 ))}
 
                 <div className="mt-20">
-                  <Button className="absolute w-full bottom-0 bg-gray-700 text-white group-hover:bg-electric-blue group-hover:text-black">
+                  <Button className="absolute w-full bottom-0 bg-gray-700 text-white group-hover:bg-electric-blue group-hover:text-black ">
                     Get Your Ticket
                   </Button>
                 </div>

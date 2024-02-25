@@ -1,4 +1,5 @@
 import EventItems from "@/components/EventItems";
+import Faq from "@/components/Faq";
 import Gallery from "@/components/Gallery";
 import Hero from "@/components/Hero";
 import Pricings from "@/components/Pricings";
@@ -16,6 +17,7 @@ const Home = () => {
       <Pricings />
       <Reviews />
       <RecentEvents />
+      <Faq />
     </main>
   );
 };
