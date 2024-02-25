@@ -11,8 +11,8 @@ const Faq = () => {
     <section className="bg-[#050D14] min-h-dvh flex items-center justify-center py-20 lg:py-0">
       <div className="section-wrapper space-y-16 w-full">
         <SectionTitle
-          title="Frequently Asked Questions"
-          description="Find answers to common questions about ticket purchasing, refunds, discounts, event suitability, ticket transfers, and more."
+          title="FAQs"
+          description="Ut posuere felis arcu tellus tempus in in ultricies. Gravida id nibh ornare viverra. Ultrices faucibus neque velit <br/> risus ac id lorem."
         />
 
         <Accordion type="single" collapsible className="w-full">

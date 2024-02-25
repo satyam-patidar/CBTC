@@ -75,10 +75,30 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
               className="flex flex-col gap-1"
             >
-              <Link to="/">Home</Link>
-              <Link to="/dashboard/recent-events">Dashboard</Link>
-              <Link to="/">About</Link>
-              <Link to="/">Contact</Link>
+              <Link
+                to="/"
+                className="px-4 py-2 rounded hover:bg-primary duration-300 transition-all"
+              >
+                Home
+              </Link>
+              <Link
+                to="/dashboard/recent-events"
+                className="px-4 py-2 rounded hover:bg-primary duration-300 transition-all"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/"
+                className="px-4 py-2 rounded hover:bg-primary duration-300 transition-all"
+              >
+                About
+              </Link>
+              <Link
+                to="/"
+                className="px-4 py-2 rounded hover:bg-primary duration-300 transition-all"
+              >
+                Contact
+              </Link>
             </div>
           </div>
         </div>

@@ -69,7 +69,10 @@ const EventItems = () => {
   return (
     <main>
       <div className="flex justify-end">
-        <Button onClick={() => setIsModalOpen(true)} className="rounded-full">
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          className="rounded-full mb-5 lg:mb-0"
+        >
           Add Events
         </Button>
 
