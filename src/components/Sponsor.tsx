@@ -23,7 +23,10 @@ const sponsors = [
 const Sponsor = () => {
   return (
     <section className="section-wrapper my-20 lg:my-[100px] space-y-16">
-      <div data-aos="fade-down" className="flex items-center flex-col gap-3">
+      <div
+        data-aos="fade-down"
+        className="flex items-center flex-col gap-3 text-center"
+      >
         <p className="text-sm font-semibold">Our Sponsors</p>
         <h3>We're Proudly Supported By</h3>
       </div>
@@ -60,7 +63,7 @@ const Sponsor = () => {
       <div
         data-aos="fade-down"
         data-aos-duration="3000"
-        className="flex items-center flex-col gap-3"
+        className="flex items-center flex-col gap-3 text-center"
       >
         <h4>Interested in Becoming a Sponsor?</h4>
         <p className="brightness-90">

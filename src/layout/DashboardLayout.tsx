@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 
 const Dashboard = () => {
   const [menuOpen, setIsMenuOpen] = useState(false);
+
+  // stop scrolling when nav is open on small devices
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [menuOpen]);
 
   return (
     <main className="min-h-[calc(100dvh-80px)] grid md:grid-cols-5 lg:grid-cols-12">

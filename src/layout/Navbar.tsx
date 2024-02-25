@@ -1,11 +1,20 @@
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMenu, IoClose } from "react-icons/io5";
 
 const Navbar = () => {
   const location = useLocation();
   const [menuOpen, setIsMenuOpen] = useState(false);
+
+  // stop scrolling when nav is open on small devices
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [menuOpen]);
 
   return (
     <nav className="bg-midnight-blue">
