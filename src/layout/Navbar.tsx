@@ -1,38 +1,86 @@
-import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { IoMenu, IoClose } from "react-icons/io5";
 
 const Navbar = () => {
   const location = useLocation();
+  const [menuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <nav className="bg-midnight-blue">
       <div
         className={cn(
-          "py-[24px] flex items-center justify-between",
+          "py-[24px] flex items-center justify-between max-w-[100dvw] overflow-x-hidden",
           location.pathname.startsWith("/dashboard")
             ? "px-5"
             : "section-wrapper"
         )}
       >
         {/* left side */}
-        <div>
+        <Link to="/">
           <h4>
             Event {""}
             <span
               className="text-electric-blue
-          "
+              "
             >
               360
             </span>
           </h4>
-        </div>
+        </Link>
 
         {/* right side */}
-        <div className="flex gap-4">
-          <Link to="/">Home</Link>
-          <Link to="/dashboard/recent-events">Dashboard</Link>
-          <Link to="/">About</Link>
-          <Link to="/">Contact</Link>
+
+        <div>
+          <div className="max-md:hidden md:flex gap-4">
+            <Link to="/">Home</Link>
+            <Link to="/dashboard/recent-events">Dashboard</Link>
+            <Link to="/">About</Link>
+            <Link to="/">Contact</Link>
+          </div>
+
+          <button onClick={() => setIsMenuOpen(true)} className="md:hidden">
+            <IoMenu className="size-6" />
+          </button>
+
+          {/* mobile navigation overlay */}
+          <div
+            onClick={() => setIsMenuOpen(false)}
+            className={cn(
+              "fixed top-0 right-0 w-full h-full bg-black/70 z-50 backdrop-blur-md md:hidden",
+              menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+            )}
+          ></div>
+
+          {/* mobile navigation content */}
+          <div
+            className={cn(
+              "absolute top-0 right-0 w-1/2 h-screen md:hidden bg-midnight-blue px-3 py-10 rounded transition-transform ease-in-out duration-300 z-50 overflow-x-hidden",
+              menuOpen ? "translate-x-0" : "translate-x-full"
+            )}
+          >
+            {/* closing button */}
+            <div
+              onClick={() => setIsMenuOpen(false)}
+              className="flex justify-end mb-5"
+            >
+              <button>
+                <IoClose className="size-6" />
+              </button>
+            </div>
+
+            {/* navigation items */}
+            <div
+              onClick={() => setIsMenuOpen(false)}
+              className="flex flex-col gap-1"
+            >
+              <Link to="/">Home</Link>
+              <Link to="/dashboard/recent-events">Dashboard</Link>
+              <Link to="/">About</Link>
+              <Link to="/">Contact</Link>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
