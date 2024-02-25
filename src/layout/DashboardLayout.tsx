@@ -52,7 +52,7 @@ const Dashboard = () => {
         {/* mobile navigation content */}
         <div
           className={cn(
-            "absolute top-0 left-0 w-1/2 h-screen md:hidden bg-midnight-blue z-50 px-3 py-10 rounded transition-transform ease-in-out duration-300",
+            "absolute top-0 left-0 w-1/2 min-h-dvh max-h-dvh md:hidden bg-midnight-blue z-50 px-3 py-10 rounded transition-transform ease-in-out duration-300",
             menuOpen ? "translate-x-0" : "-translate-x-full"
           )}
         >
