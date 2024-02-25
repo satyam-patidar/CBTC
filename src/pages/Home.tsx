@@ -10,7 +10,7 @@ import Sponsor from "@/components/Sponsor";
 
 const Home = () => {
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Hero />
       <Services />
       <EventItems />
