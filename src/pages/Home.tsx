@@ -6,6 +6,7 @@ import Pricings from "@/components/Pricings";
 import RecentEvents from "@/components/RecentEvents";
 import Reviews from "@/components/Reviews";
 import Services from "@/components/Services";
+import Sponsor from "@/components/Sponsor";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <Reviews />
       <RecentEvents />
       <Faq />
+      <Sponsor />
     </main>
   );
 };
