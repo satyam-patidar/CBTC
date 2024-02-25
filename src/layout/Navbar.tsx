@@ -65,8 +65,8 @@ const Navbar = () => {
           {/* mobile navigation content */}
           <div
             className={cn(
-              "absolute top-0 right-0 w-1/2 min-h-dvh max-h-dvh md:hidden bg-midnight-blue px-3 py-10 rounded transition-transform ease-in-out duration-300 z-50 overflow-x-hidden",
-              menuOpen ? "-translate-x-0" : "translate-x-full"
+              "absolute top-0 left-0 w-1/2 min-h-dvh max-h-dvh md:hidden bg-midnight-blue px-3 py-10 rounded transition-transform ease-in-out duration-300 z-50",
+              menuOpen ? "translate-x-0" : "-translate-x-full"
             )}
           >
             {/* closing button */}
