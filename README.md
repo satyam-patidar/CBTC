@@ -27,7 +27,9 @@ Event 360 is a comprehensive project that includes both a responsive website and
 - **Pricing**: Presents pricing details for the offered services.
 - **Review**: Displays customer testimonials for credibility.
 - **Recent Events**: Highlights recent events with Tanstack Query for real-time updates.
-- **Additional Sections**: At least two unique sections added to enhance the website's theme.
+- **Additional Sections**:
+  1. **FAQ**: Answers to common questions about services and events.
+  2. **Sponsor Updates**: Latest news and updates from event sponsors.
 
 ### Dashboard Section
 
